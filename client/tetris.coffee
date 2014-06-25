@@ -23,22 +23,79 @@ class TetrisPiece extends Backbone.Model
     @set 'coordinates', @generatePiece(startPosition)
 
   generatePiece: ->
-    @generateLine()
+    @generateTriangle()
     
   generateLine: ->
     center = @get 'center'
-    centerCol = center[0]
-    centerRow = center[1]
+    centerRow = center[0]
+    centerCol = center[1]
     [
-      [centerCol, centerRow - 1]
-      [centerCol, centerRow]
-      [centerCol, centerRow + 1]
-      [centerCol, centerRow + 2]
+      [centerRow, centerCol - 1]
+      [centerRow, centerCol]
+      [centerRow, centerCol + 1]
+      [centerRow, centerCol + 2]
     ]
 
-  generateLeftL: ->  
-  generateRightL: ->  
+  generateLeftL: ->
+    center = @get 'center'
+    centerRow = center[0]
+    centerCol = center[1]
+    [
+      [centerRow - 1, centerCol]
+      [centerRow, centerCol]
+      [centerRow, centerCol + 1]
+      [centerRow, centerCol + 2]
+    ]
+  generateRightL: ->
+    center = @get 'center'
+    centerRow = center[0]
+    centerCol = center[1]
+    [
+      [centerRow - 1, centerCol]
+      [centerRow, centerCol]
+      [centerRow, centerCol - 1]
+      [centerRow, centerCol - 2]
+    ]
+  generateRightZag: ->
+    center = @get 'center'
+    centerRow = center[0]
+    centerCol = center[1]
+    [
+      [centerRow, centerCol]
+      [centerRow - 1, centerCol]
+      [centerRow - 1, centerCol + 1]
+      [centerRow, centerCol - 1]
+    ]
+  generateLeftZag: ->
+    center = @get 'center'
+    centerRow = center[0]
+    centerCol = center[1]
+    [
+      [centerRow, centerCol]
+      [centerRow - 1, centerCol]
+      [centerRow - 1, centerCol - 1]
+      [centerRow, centerCol + 1]
+    ]
+  generateTriangle: ->
+    center = @get 'center'
+    centerRow = center[0]
+    centerCol = center[1]
+    [
+      [centerRow, centerCol]
+      [centerRow - 1, centerCol]
+      [centerRow, centerCol + 1]
+      [centerRow, centerCol - 1]
+    ]
   generateSquare: ->
+    center = @get 'center'
+    centerRow = center[0]
+    centerCol = center[1]
+    [
+      [centerRow, centerCol]
+      [centerRow, centerCol + 1]
+      [centerRow + 1, centerCol]
+      [centerRow + 1, centerCol + 1]
+    ]
 
   # always rotate clockwise for now
   getRotateCoordinates: =>
