@@ -1,0 +1,7 @@
+<div id="tetris">
+  <div class="grid-row" rv-each-row="model:board">
+    <div class="grid-column" rv-each-column="row" rv-class-selected="column">{column}</div>
+  </div>
+   <button rv-on-click="model.resetBoard">reset</button>
+   <button rv-on-click="model.movePieceDown">move</button>
+</div>

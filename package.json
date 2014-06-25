@@ -11,6 +11,7 @@
   "dependencies": {
     "ansi-styles": "^1.1.0",
     "backbone": "^1.1.2",
+    "bootstrap": "^3.1.1",
     "browserify": "^4.1.11",
     "coffeeify": "^0.6.0",
     "grunt": "^0.4.5",
@@ -24,6 +25,7 @@
     "grunt-html-build": "^0.3.2",
     "grunt-karma": "^0.8.3",
     "has-color": "^0.1.7",
+    "jquery": "^2.1.1",
     "karma": "^0.12.16",
     "karma-browserify": "^0.2.1",
     "karma-chrome-launcher": "^0.1.4",

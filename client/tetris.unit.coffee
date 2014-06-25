@@ -20,8 +20,8 @@ describe 'tetris', ->
     board = null
     beforeEach ->
       board = tetris.makeEmptyBoard()
-    it 'makes a tetris board with 20 columns and 10 rows', ->
-      expect(board.length).toEqual 20
+    it 'makes a tetris board with 22 columns and 10 rows', ->
+      expect(board.length).toEqual 22
       expect(board[0].length).toEqual 10
     it 'makes an empty board', ->
       board.forEach (row)->
