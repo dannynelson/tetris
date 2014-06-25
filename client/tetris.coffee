@@ -27,6 +27,7 @@ class TetrisPiece extends Backbone.Model
     random = Math.floor(Math.random() * 7)
     @generate pieces[random]
   
+  # @param {string} pieceType - either 'line', 'leftL', 'rightL', 'leftZag', 'rightZag', 'triangle', or 'square'
   generate: (pieceType) ->
     center = @get 'center'
     row = center[0]
@@ -106,7 +107,6 @@ module.exports = class Tetris extends Backbone.Model
 
   # factor out remove piece logic
   removeCurrentPieceFromBoard: =>
-    console.log 'removeCurrentPieceFromBoard'
     board = @getBoardClone()
     # TODO: why doesn't _.each work here?
     @get('currentPiece').get('coordinates').forEach (coordinate) ->
@@ -114,8 +114,6 @@ module.exports = class Tetris extends Backbone.Model
     @set board: board
 
   putCurrentPieceOnBoard: =>
-    console.log 'putCurrentPieceOnBoard'
-    debugger
     currentPieceCoordinates = @get('currentPiece').get('coordinates')
     board = @getBoardClone()
     _.each currentPieceCoordinates, (coordinate) ->
@@ -130,7 +128,6 @@ module.exports = class Tetris extends Backbone.Model
   # @param {string} direction - 'left', 'right', or 'down'
   movePiece: (direction) =>
     console.log "movePiece#{direction}"
-    debugger
     piece = @get('currentPiece')
     if (@isValidMove(piece.getCoordinates(direction)))
       @removeCurrentPieceFromBoard()
@@ -175,8 +172,7 @@ module.exports = class Tetris extends Backbone.Model
     @set board: board
 
   createNewPiece: =>
-    debugger
-    @set(currentPiece: new TetrisPiece([1,4]))
+    @set(currentPiece: new TetrisPiece([3,4]))
     @get('currentPiece').on 'change:coordinates', @putCurrentPieceOnBoard
     @putCurrentPieceOnBoard()
 
