@@ -89,6 +89,7 @@ module.exports = class Tetris extends Backbone.Model
 
     @putCurrentPieceOnBoard()
     @get('currentPiece').on 'change:coordinates', @putCurrentPieceOnBoard
+    # @setMoveTimer 1000
 
 
   makeEmptyBoard: =>
@@ -141,4 +142,12 @@ module.exports = class Tetris extends Backbone.Model
       @removeCurrentPieceFromBoard()
       piece.rotate()
 
+  setMoveTimer: (speed) =>
+    moveTimer = @get 'moveTimer'
+    if moveTimer then clearInterval moveTimer
+    piece = @get 'piece'
+    moveTimer = setInterval =>
+      @movePiece 'down'
+    , speed
+    @set moveTimer: moveTimer
 
