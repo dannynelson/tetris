@@ -15,3 +15,5 @@ index files should be in the root of each directory, and are the entry point for
 All templates will be appended to index.html.
 
 Default client asset management is Coffeeify.
+
+

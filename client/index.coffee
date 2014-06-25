@@ -1,6 +1,1 @@
-require "./another.coffee"
-
-debugger
-console.log "index coffee"
-
-  
+Tetris = require './tetris.coffee'

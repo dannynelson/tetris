@@ -26,11 +26,13 @@
     "has-color": "^0.1.7",
     "karma": "^0.12.16",
     "karma-browserify": "^0.2.1",
+    "karma-chrome-launcher": "^0.1.4",
     "karma-coffee-preprocessor": "^0.2.1",
     "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "lodash": "^2.4.1",
     "matchdep": "^0.3.0",
+    "rivets": "^0.6.8",
     "strip-ansi": "^0.2.2"
   }
 }
