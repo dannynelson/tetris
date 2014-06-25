@@ -20,84 +20,25 @@ _ = require 'lodash'
 class TetrisPiece extends Backbone.Model
   initialize: (startPosition) ->
     @set 'center', startPosition
-    @set 'coordinates', @generatePiece(startPosition)
+    @set 'coordinates', @selectRandomPiece(startPosition)
 
-  generatePiece: ->
-    pieces = ['Line', 'LeftL', 'RightL', 'LeftZag', 'RightZag', 'Triangle', 'Square']
+  selectRandomPiece: ->
+    pieces = ['line', 'leftL', 'rightL', 'leftZag', 'rightZag', 'triangle', 'square']
     random = Math.floor(Math.random() * 7)
-    this['generate' + pieces[random]]()
-    
-  generateLine: ->
+    @generate pieces[random]
+  
+  generate: (pieceType) ->
     center = @get 'center'
-    centerRow = center[0]
-    centerCol = center[1]
-    [
-      [centerRow, centerCol - 1]
-      [centerRow, centerCol]
-      [centerRow, centerCol + 1]
-      [centerRow, centerCol + 2]
-    ]
-
-  generateLeftL: ->
-    center = @get 'center'
-    centerRow = center[0]
-    centerCol = center[1]
-    [
-      [centerRow - 1, centerCol]
-      [centerRow, centerCol]
-      [centerRow, centerCol + 1]
-      [centerRow, centerCol + 2]
-    ]
-  generateRightL: ->
-    center = @get 'center'
-    centerRow = center[0]
-    centerCol = center[1]
-    [
-      [centerRow - 1, centerCol]
-      [centerRow, centerCol]
-      [centerRow, centerCol - 1]
-      [centerRow, centerCol - 2]
-    ]
-  generateRightZag: ->
-    center = @get 'center'
-    centerRow = center[0]
-    centerCol = center[1]
-    [
-      [centerRow, centerCol]
-      [centerRow - 1, centerCol]
-      [centerRow - 1, centerCol + 1]
-      [centerRow, centerCol - 1]
-    ]
-  generateLeftZag: ->
-    center = @get 'center'
-    centerRow = center[0]
-    centerCol = center[1]
-    [
-      [centerRow, centerCol]
-      [centerRow - 1, centerCol]
-      [centerRow - 1, centerCol - 1]
-      [centerRow, centerCol + 1]
-    ]
-  generateTriangle: ->
-    center = @get 'center'
-    centerRow = center[0]
-    centerCol = center[1]
-    [
-      [centerRow, centerCol]
-      [centerRow - 1, centerCol]
-      [centerRow, centerCol + 1]
-      [centerRow, centerCol - 1]
-    ]
-  generateSquare: ->
-    center = @get 'center'
-    centerRow = center[0]
-    centerCol = center[1]
-    [
-      [centerRow, centerCol]
-      [centerRow, centerCol + 1]
-      [centerRow + 1, centerCol]
-      [centerRow + 1, centerCol + 1]
-    ]
+    row = center[0]
+    col = center[1]
+    switch pieceType
+      when 'line' then [[row, col - 1], [row, col], [row, col + 1], [row, col + 2]]
+      when 'leftL' then [[row - 1, col],[row, col],[row, col + 1],[row, col + 2]]
+      when 'rightL' then [[row - 1, col], [row, col], [row, col - 1], [row, col - 2]]
+      when 'leftZag' then [[row, col], [row - 1, col], [row - 1, col - 1], [row, col + 1]]
+      when 'rightZag' then [[row, col], [row - 1, col], [row - 1, col + 1], [row, col - 1]]
+      when 'traingle' then [[row, col], [row - 1, col], [row, col + 1], [row, col - 1]]
+      when 'square' then [[row, col], [row, col + 1], [row + 1, col], [row + 1, col + 1]]
 
   # always rotate clockwise for now
   getRotateCoordinates: =>
