@@ -42,33 +42,19 @@ class TetrisPiece extends Backbone.Model
 
   rotatePiece: ->
 
-  getDownCoordinates: ->
+  getCoordinates: (direction) ->
+    rowOffset = colOffset = 0
+    switch direction
+      when 'down' then rowOffset = 1
+      when 'left' then colOffset = -1
+      when 'right' then colOffset = 1
     coordinates = @get 'coordinates'
     _.map coordinates, (coordinate) ->
-      [coordinate[0]+1, coordinate[1]]
+      [coordinate[0] + rowOffset, coordinate[1] + scolOffset]
 
-  moveDown: ->
-    @set 'coordinates', @getDownCoordinates()
+  move: (direction) ->
+    @set 'coordinates', @getCoordinates(direction)
     @trigger 'moved'
-
-  getLeftCoordinates: ->
-    coordinates = @get 'coordinates'
-    _.map coordinates, (coordinate) ->
-      [coordinate[0], coordinate[1] - 1]
-
-  moveLeft: ->
-    @set 'coordinates', @getLeftCoordinates()
-    @trigger 'moved'
-
-  getRightCoordinates: ->
-    coordinates = @get 'coordinates'
-    _.map coordinates, (coordinate) ->
-      [coordinate[0], coordinate[1] + 1]
-
-  moveRight: ->
-    @set 'coordinates', @getRightCoordinates()
-    @trigger 'moved'
-
 
 
 module.exports = class Tetris extends Backbone.Model
@@ -98,6 +84,7 @@ module.exports = class Tetris extends Backbone.Model
       board[coordinate[0]][coordinate[1]] = false
     board
 
+  # factor out remove piece logic
   removeCurrentPieceFromBoard: =>
     console.log 'removeCurrentPieceFromBoard'
     board = @getBoardClone()
@@ -119,27 +106,13 @@ module.exports = class Tetris extends Backbone.Model
     _.every newCoordinates, (coordinate) =>
       board[coordinate[0]] and board[coordinate[0]][coordinate[1]] is false
 
-  # TODO merge these
-  movePieceLeft: =>
-    console.log 'movePieceLeft'
+  # @param {string} direction - 'left', 'right', or 'down'
+  movePiece: (direction) =>
+    console.log "movePiece#{direction}"
     piece = @get('currentPiece')
-    if (@isValidMove(piece.getLeftCoordinates()))
+    if (@isValidMove(piece.getCoordinates(direction)))
       @removeCurrentPieceFromBoard()
-      piece.moveLeft()
-  movePieceRight: =>
-    console.log 'movePieceRight'
-    piece = @get('currentPiece')
-    debugger
-    if (@isValidMove(piece.getRightCoordinates()))
-      @removeCurrentPieceFromBoard()
-      piece.moveRight()
-  movePieceDown: =>
-    console.log 'movePieceDown'
-    piece = @get('currentPiece')
-    if (@isValidMove(piece.getDownCoordinates()))
-      @removeCurrentPieceFromBoard()
-      piece.moveDown()
-
+      piece.move(direction)
 
   # get move coordinates
   # test if coordinates are valid

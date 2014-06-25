@@ -18,6 +18,6 @@ module.exports = class TetrisView extends Backbone.View
   move: (e) =>
     console.log 'move'
     switch e.keyCode
-      when 37 then @model.movePieceLeft()
-      when 39 then @model.movePieceRight()
-      when 40 then @model.movePieceDown()
+      when 37 then @model.movePiece('left')
+      when 39 then @model.movePiece('right')
+      when 40 then @model.movePiece('down')
