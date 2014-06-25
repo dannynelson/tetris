@@ -23,7 +23,9 @@ class TetrisPiece extends Backbone.Model
     @set 'coordinates', @generatePiece(startPosition)
 
   generatePiece: ->
-    @generateTriangle()
+    pieces = ['Line', 'LeftL', 'RightL', 'LeftZag', 'RightZag', 'Triangle', 'Square']
+    random = Math.floor(Math.random() * 7)
+    this['generate' + pieces[random]]()
     
   generateLine: ->
     center = @get 'center'
