@@ -151,9 +151,28 @@ module.exports = class Tetris extends Backbone.Model
       if (@isValidMove(piece.getCoordinates('down')))
         @movePiece 'down'
       else
+        @checkForCompletedRows()
         @createNewPiece()
     , speed
     @set moveTimer: moveTimer
+
+  checkForCompletedRows: =>
+    # TODO: hacky
+    that = @
+    board = @getBoardClone()
+    completedRows = []
+    debugger
+    _.each board, (row, i) ->
+      completed = _.every row, (column) ->
+        column is true
+      if completed then completedRows.push i
+    _.each completedRows, (completedRow) ->
+      debugger
+      that.set('score', that.get('score') + 10)
+      row = board.splice(completedRow, 1)[0]
+      row = _.map row, (column) -> false
+      board.unshift row
+    @set board: board
 
   createNewPiece: =>
     debugger
