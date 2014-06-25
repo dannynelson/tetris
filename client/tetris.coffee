@@ -92,12 +92,17 @@ module.exports = class Tetris extends Backbone.Model
   getBoardClone: =>
     _.map @get('board'), (row) -> row.slice()
 
+  getBoardCloneWithoutCurrentPiece: =>
+    board = @getBoardClone()
+    @get('currentPiece').get('coordinates').forEach (coordinate) ->
+      board[coordinate[0]][coordinate[1]] = false
+    board
+
   removeCurrentPieceFromBoard: =>
     console.log 'removeCurrentPieceFromBoard'
-    currentPieceCoordinates = @get('currentPiece').get('coordinates')
     board = @getBoardClone()
     # TODO: why doesn't _.each work here?
-    currentPieceCoordinates.forEach (coordinate) ->
+    @get('currentPiece').get('coordinates').forEach (coordinate) ->
       board[coordinate[0]][coordinate[1]] = false
     @set board: board
 
@@ -110,10 +115,11 @@ module.exports = class Tetris extends Backbone.Model
     @set board: board
 
   isValidMove: (newCoordinates) =>
-    board = @get 'board'
+    board = @getBoardCloneWithoutCurrentPiece()
     _.every newCoordinates, (coordinate) =>
       board[coordinate[0]] and board[coordinate[0]][coordinate[1]] is false
 
+  # TODO merge these
   movePieceLeft: =>
     console.log 'movePieceLeft'
     piece = @get('currentPiece')
@@ -123,6 +129,7 @@ module.exports = class Tetris extends Backbone.Model
   movePieceRight: =>
     console.log 'movePieceRight'
     piece = @get('currentPiece')
+    debugger
     if (@isValidMove(piece.getRightCoordinates()))
       @removeCurrentPieceFromBoard()
       piece.moveRight()
