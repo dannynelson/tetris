@@ -40,7 +40,22 @@ class TetrisPiece extends Backbone.Model
   generateRightL: ->  
   generateSquare: ->
 
-  rotatePiece: ->
+  # always rotate clockwise for now
+  getRotateCoordinates: =>
+    center = @get 'center'
+    coordinates = @get 'coordinates'
+    # center piece at [0,0]
+    coordinates = _.map coordinates, (coordinate) ->
+      [coordinate[0] - center[0], coordinate[1] - center[1]]
+    # rotate
+    coordinates = _.map coordinates, (coordinate) ->
+      [coordinate[1], -coordinate[0]]
+    # put back in original position
+    _.map coordinates, (coordinate) ->
+      [coordinate[0] + center[0], coordinate[1] + center[1]]
+
+  rotate: ->
+    @set coordinates: @getRotateCoordinates()
 
   getCoordinates: (direction) ->
     rowOffset = colOffset = 0
@@ -50,11 +65,17 @@ class TetrisPiece extends Backbone.Model
       when 'right' then colOffset = 1
     coordinates = @get 'coordinates'
     _.map coordinates, (coordinate) ->
-      [coordinate[0] + rowOffset, coordinate[1] + scolOffset]
+      [coordinate[0] + rowOffset, coordinate[1] + colOffset]
 
   move: (direction) ->
+    rowOffset = colOffset = 0
+    switch direction
+      when 'down' then rowOffset = 1
+      when 'left' then colOffset = -1
+      when 'right' then colOffset = 1
+    center = @get 'center'
+    @set center: [center[0] + rowOffset, center[1] + colOffset]
     @set 'coordinates', @getCoordinates(direction)
-    @trigger 'moved'
 
 
 module.exports = class Tetris extends Backbone.Model
@@ -67,7 +88,7 @@ module.exports = class Tetris extends Backbone.Model
       currentPiece: new TetrisPiece([1,4])
 
     @putCurrentPieceOnBoard()
-    @get('currentPiece').on 'moved', @putCurrentPieceOnBoard
+    @get('currentPiece').on 'change:coordinates', @putCurrentPieceOnBoard
 
 
   makeEmptyBoard: =>
@@ -114,7 +135,10 @@ module.exports = class Tetris extends Backbone.Model
       @removeCurrentPieceFromBoard()
       piece.move(direction)
 
-  # get move coordinates
-  # test if coordinates are valid
-  # if so, update board, otherwise do nothing
+  rotatePiece: =>
+    piece = @get('currentPiece')
+    if (@isValidMove(piece.getRotateCoordinates()))
+      @removeCurrentPieceFromBoard()
+      piece.rotate()
+
 
