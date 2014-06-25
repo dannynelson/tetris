@@ -85,11 +85,9 @@ module.exports = class Tetris extends Backbone.Model
       board: @makeEmptyBoard()
       score: 0
       level: 1
-      currentPiece: new TetrisPiece([1,4])
 
-    @putCurrentPieceOnBoard()
-    @get('currentPiece').on 'change:coordinates', @putCurrentPieceOnBoard
-    # @setMoveTimer 1000
+    @createNewPiece()
+    @setMoveTimer 1000
 
 
   makeEmptyBoard: =>
@@ -117,6 +115,7 @@ module.exports = class Tetris extends Backbone.Model
 
   putCurrentPieceOnBoard: =>
     console.log 'putCurrentPieceOnBoard'
+    debugger
     currentPieceCoordinates = @get('currentPiece').get('coordinates')
     board = @getBoardClone()
     _.each currentPieceCoordinates, (coordinate) ->
@@ -131,6 +130,7 @@ module.exports = class Tetris extends Backbone.Model
   # @param {string} direction - 'left', 'right', or 'down'
   movePiece: (direction) =>
     console.log "movePiece#{direction}"
+    debugger
     piece = @get('currentPiece')
     if (@isValidMove(piece.getCoordinates(direction)))
       @removeCurrentPieceFromBoard()
@@ -145,9 +145,20 @@ module.exports = class Tetris extends Backbone.Model
   setMoveTimer: (speed) =>
     moveTimer = @get 'moveTimer'
     if moveTimer then clearInterval moveTimer
-    piece = @get 'piece'
     moveTimer = setInterval =>
-      @movePiece 'down'
+      debugger
+      piece = @get 'currentPiece'
+      if (@isValidMove(piece.getCoordinates('down')))
+        @movePiece 'down'
+      else
+        @createNewPiece()
     , speed
     @set moveTimer: moveTimer
+
+  createNewPiece: =>
+    debugger
+    @set(currentPiece: new TetrisPiece([1,4]))
+    @get('currentPiece').on 'change:coordinates', @putCurrentPieceOnBoard
+    @putCurrentPieceOnBoard()
+
 
