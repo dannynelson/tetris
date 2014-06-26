@@ -8,12 +8,7 @@ module.exports = class TetrisView extends Backbone.View
   initialize: ->
     $(document).on 'keydown', @move
 
-  render: ->
-    @binding = rivets.bind(@el, {model: @model})
-    @
-
-  # remove: ->
-  #   @binding.unbind()
+  render: -> rivets.bind(@el, {model: @model})
 
   move: (e) =>
     console.log 'move'
