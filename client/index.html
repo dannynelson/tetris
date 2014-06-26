@@ -19,7 +19,7 @@
       <div class="score"><strong>Score:</strong> { model:score }</div>
       <div class="score"><strong>Completed:</strong> { model:completedRows }</div>
     </div>
-    <div class="grid-row" rv-each-row="model:board | last20" rv-show="row">
+    <div class="grid-row" rv-each-row="model:board | last20">
       <div class="grid-column" rv-each-column="row" rv-class-selected="column"></div>
     </div>
   </div>

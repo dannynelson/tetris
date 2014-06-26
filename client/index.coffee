@@ -1,6 +1,5 @@
 $ = require 'jquery'
 _ = require 'lodash'
-# require './rivets-backbone-adapter/rivets-backbone.js'
 require './rivets-backbone.coffee'
 Tetris = require './tetris.coffee'
 TetrisView = require './tetris-view.coffee'

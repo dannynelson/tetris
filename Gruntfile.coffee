@@ -38,19 +38,19 @@ module.exports = (grunt) ->
       options:
         configFile: 'config/karma.conf.coffee',
       browser:
-        autoWatch: true,
-        singleRun: false,
+        autoWatch: true
+        singleRun: false
         browsers: ['Chrome', 'Firefox']
       continuous:
-        singleRun: true,
+        singleRun: true
       coverage:
-        reporters: ['coverage'],
+        reporters: ['coverage']
       watch:
-        autoWatch: true,
+        autoWatch: true
         singleRun: false
       debug:
-        autoWatch: true,
-        singleRun: false,
+        autoWatch: true
+        singleRun: false
         browsers: ['Chrome']
 
     stylus:
