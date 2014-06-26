@@ -34,8 +34,8 @@ class TetrisPiece extends Backbone.Model
     col = center[1]
     switch pieceType
       when 'line' then [[row, col - 1], [row, col], [row, col + 1], [row, col + 2]]
-      when 'leftL' then [[row - 1, col],[row, col],[row, col + 1],[row, col + 2]]
-      when 'rightL' then [[row - 1, col], [row, col], [row, col - 1], [row, col - 2]]
+      when 'leftL' then [[row - 1, col - 1],[row, col - 1],[row, col],[row, col + 1]]
+      when 'rightL' then [[row, col - 1], [row, col], [row, col + 1], [row + 1, col + 1]]
       when 'leftZag' then [[row, col], [row - 1, col], [row - 1, col - 1], [row, col + 1]]
       when 'rightZag' then [[row, col], [row - 1, col], [row - 1, col + 1], [row, col - 1]]
       when 'traingle' then [[row, col], [row - 1, col], [row, col + 1], [row, col - 1]]
