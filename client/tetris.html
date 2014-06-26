@@ -1,10 +1,11 @@
 <div id="tetris">
   <h1>Tetris</h1>
-  <div>Level: { model:level }</div>
-  <div>Score: { model:score }</div>
-  <div class="grid-row" rv-each-row="model:board | last20" rv-show="row">
-    <div class="grid-column" rv-each-column="row" rv-class-selected="column">{column}</div>
+  <div class="scoreboard">
+    <div class="score"><strong>Level:</strong> { model:level }</div>
+    <div class="score"><strong>Score:</strong> { model:score }</div>
+    <div class="score"><strong>Completed:</strong> { model:completedRows }</div>
   </div>
-   <button rv-on-click="model.resetBoard">reset</button>
-   <button rv-on-click="model.movePieceDown">move</button>
+  <div class="grid-row" rv-each-row="model:board | last20" rv-show="row">
+    <div class="grid-column" rv-each-column="row" rv-class-selected="column"></div>
+  </div>
 </div>
